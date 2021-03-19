@@ -1,0 +1,168 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Access {
+  accessToken: String!
+  user: User!
+}
+
+type Alert {
+  message: String!
+  status: String!
+}
+
+type Auth {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
+input BasicPagination {
+  page: Int = 1
+  pageSize: Int = 10
+}
+
+type Category {
+  createdAt: String!
+  expenses(searchExpensesInput: SearchExpense = {dateType: "day", first: 10, order: "createdAt_DESC"}): PaginatedExpenses!
+  id: ID!
+  name: String!
+  updatedAt: String!
+}
+
+input CategoryInput {
+  name: String!
+}
+
+input ChangeEmail {
+  email: String!
+  password: String!
+}
+
+input ChangePassword {
+  oldPassword: String!
+  password1: String!
+  password2: String!
+}
+
+input CreateExpense {
+  amount: Int!
+  categoryId: ID!
+  currency: String!
+  date: String = "2021-02-17T17:53:12.893Z"
+  description: String
+}
+
+type Expense {
+  amount: Int!
+  createdAt: String!
+  currency: String!
+  date: String!
+  description: String!
+  id: ID!
+  updatedAt: String!
+}
+
+type ExpenseTypeEdge {
+  cursor: String!
+  node: Expense!
+}
+
+type ExpenseTypePageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+}
+
+input Login {
+  input: String!
+  password: String!
+}
+
+type Mutation {
+  changeEmail(changeEmailInput: ChangeEmail!): Auth!
+  changePassword(changePasswordInput: ChangePassword!): Auth!
+  confirmAccount(token: String!): Auth!
+  createCategory(categoryInput: CategoryInput!): Category!
+  createExpense(createExpenseInput: CreateExpense!): Expense!
+  deleteAccount(password: String!): Alert!
+  deleteCategory(search: String!): Alert!
+  deleteExpense(id: String!): Alert!
+  login(loginInput: Login!): Auth!
+  refreshAccessToken(token: String!): Access!
+  register(registrationInput: Registration!): Alert!
+  resetPassword(resetTokenInput: ResetPassword!, token: String!): Alert!
+  sendResetEmail(email: String!): Alert!
+  updateCategory(categoryInput: CategoryInput!, search: String!): Category!
+  updateExpense(id: String!, updateExpenseInput: UpdateExpense!): Expense!
+}
+
+type PaginatedCategory {
+  hasNextPage: Boolean!
+  results: [Category!]
+  totalCount: Int!
+  totalPages: Int!
+}
+
+type PaginatedExpenses {
+  edges: [ExpenseTypeEdge!]
+  pageInfo: ExpenseTypePageInfo!
+  totalCount: Int!
+}
+
+type Query {
+  getAllCategories: [Category!]!
+  getAllExpenses: [Expense!]!
+  getCategories(paginationInput: BasicPagination = {page: 1, pageSize: 10}, search: String): PaginatedCategory!
+  getCategory(search: String!): SingleCategory!
+  getExpense(id: String!): Expense!
+  getExpenses(searchExpensesInput: SearchExpense = {dateType: "day", first: 10, order: "createdAt_DESC"}): PaginatedExpenses!
+}
+
+input Registration {
+  email: String!
+  password1: String!
+  password2: String!
+  username: String!
+}
+
+input ResetPassword {
+  password1: String!
+  password2: String!
+}
+
+input SearchExpense {
+  after: String
+  amount: Int
+  date: String
+  dateType: String = "day"
+  description: String
+  first: Int = 10
+  order: String = "createdAt_DESC"
+}
+
+type SingleCategory {
+  createdAt: String!
+  expenses: PaginatedExpenses!
+  id: ID!
+  name: String!
+  updatedAt: String!
+}
+
+input UpdateExpense {
+  amount: Int
+  categoryHandle: ID
+  currency: String
+  date: String = "Wed Feb 17 2021"
+  description: String
+}
+
+type User {
+  createdAt: String!
+  email: String!
+  id: ID!
+  lastLogin: String!
+  picture: String
+  updatedAt: String!
+  username: String!
+}
