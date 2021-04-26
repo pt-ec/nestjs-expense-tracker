@@ -92,10 +92,12 @@ export class ExpensesService {
         : undefined,
       category,
     );
+      
+    const orderDr = searchInput.order.split('_')[0];
     const paginatedExpenses = this.commonService.cursorPaginate(
       expenses,
       totalCount,
-      'createdAt',
+      orderDr as keyof Expense,
       searchInput.first,
     );
 
